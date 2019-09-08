@@ -177,7 +177,7 @@ for letter in ascii_uppercase:
                                   'pi_candidatos'    : pi_candidates[i],
                                   'nota_12'          : p12_candidates[i],
                                   'nota_10/11'       : p1110_candidates[i], 
-                                  'curso_avr'        : university_code,
+                                  'curso_univ'       : university_code,
                                   'curso_pais'       : country_code,
                                   'vagas_curso'      : opennings_courses[id_],
                                   'designacao'       : course_designation, 
@@ -193,7 +193,7 @@ for letter in ascii_uppercase:
                                   'pi_candidatos'    : pi_candidates[i],
                                   'nota_12'          : p12_candidates[i],
                                   'nota_10/11'       : p1110_candidates[i], 
-                                  'curso_avr'        : university_code,
+                                  'curso_univ'       : university_code,
                                   'curso_pais'       : country_code,
                                   'vagas_curso'      : int(opennings_courses[id_]),
                                   'designacao'       : course_designation,
@@ -202,7 +202,7 @@ for letter in ascii_uppercase:
     
 with open('colocados_db.csv','w', encoding='latin-1') as ft:
     ft.write('num_id,nome,nota,opcao,pi,nota_12,nota_10/11,curso_univ,curso_pais,vagas_curso,designacao,vagas_resultantes,\n')
-    keys = ['num_id','nome','nota','opcao','pi_candidatos','nota_12','nota_10/11','curso_avr','curso_pais','vagas_curso','designacao', 'vagas_resultantes','tipo_de_universidate','universidade']
+    keys = ['num_id','nome','nota','opcao','pi_candidatos','nota_12','nota_10/11','curso_univ','curso_pais','vagas_curso','designacao', 'vagas_resultantes','tipo_de_universidate','universidade']
     for line in assigned_db:
         for key in keys:
             if key == 'opcao':
@@ -218,7 +218,7 @@ with open('colocados_db.csv','w', encoding='latin-1') as ft:
 
 with open('candidatos_db.csv','w',encoding='latin-1') as ft:
     ft.write('num_id,nome,nota,opcao,pi,nota_12,nota_10/11,curso_univ,curso_pais,vagas_curso,designacao,\n')
-    keys = ['num_id','nome','nota','opcao','pi_candidatos','nota_12','nota_10/11','curso_avr','curso_pais','vagas_curso','designacao','tipo_de_universidade','universidade']
+    keys = ['num_id','nome','nota','opcao','pi_candidatos','nota_12','nota_10/11','curso_univ','curso_pais','vagas_curso','designacao','tipo_de_universidade','universidade']
     for line in candidates_db:
         for key in keys:
             if key == 'opcao':

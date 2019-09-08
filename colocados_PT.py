@@ -182,7 +182,7 @@ for letter in ascii_uppercase:
                                   'vagas_curso'      : opennings_courses[id_],
                                   'designacao'       : course_designation, 
                                   'vagas_resultantes': int(opennings_courses[id_])-len(assigned_names),
-                                  'tipo_de_universidade' : university_type,
+                                  'tipo_de_universidade' : politechnic_state,
                                   'universidade'     : university_name
                                   })
         for i, temp in enumerate(ids_candidates):
@@ -197,12 +197,12 @@ for letter in ascii_uppercase:
                                   'curso_pais'       : country_code,
                                   'vagas_curso'      : int(opennings_courses[id_]),
                                   'designacao'       : course_designation,
-                                  'tipo_de_universidade' : university_type,
+                                  'tipo_de_universidade' : politechnic_state,
                                   'universidade'     : university_name})
     
 with open('colocados_db.csv','w', encoding='latin-1') as ft:
     ft.write('num_id,nome,nota,opcao,pi,nota_12,nota_10/11,curso_univ,curso_pais,vagas_curso,designacao,vagas_resultantes,\n')
-    keys = ['num_id','nome','nota','opcao','pi_candidatos','nota_12','nota_10/11','curso_univ','curso_pais','vagas_curso','designacao', 'vagas_resultantes','tipo_de_universidate','universidade']
+    keys = ['num_id','nome','nota','opcao','pi_candidatos','nota_12','nota_10/11','curso_univ','curso_pais','vagas_curso','designacao', 'vagas_resultantes','tipo_de_universidade','universidade']
     for line in assigned_db:
         for key in keys:
             if key == 'opcao':
@@ -210,7 +210,7 @@ with open('colocados_db.csv','w', encoding='latin-1') as ft:
                     ft.write(line[key].replace(',','.')+',')
                 else:
                      ft.write('1,')
-            elif key=='vagas_resultantes':
+            elif key=='vagas_resultantes' or key=='vagas_curso':
                 ft.write(str(line[key]).replace(',','.')+',')
             else:
                 ft.write(line[key].replace(',','.')+',')
@@ -226,7 +226,7 @@ with open('candidatos_db.csv','w',encoding='latin-1') as ft:
                     ft.write(line[key].replace(',','.')+',')
                 else:
                      ft.write('1,')
-            elif key == 'vagas_resultantes':
+            elif key == 'vagas_resultantes' or key=='vagas_curso':
                  ft.write(str(line[key]).replace(',','.')+',')
             else:
                 ft.write(line[key].replace(',','.')+',')

@@ -201,9 +201,9 @@ for letter in ascii_uppercase:
                                   'universidade'     : university_name})
     
 with open('colocados_db.csv','w', encoding='latin-1') as ft:
-    ft.write('num_id,nome,nota,opcao,pi,nota_12,nota_10/11,curso_univ,curso_pais,vagas_curso,designacao,vagas_resultantes,\n')
+    ft.write('num_id,nome,nota,opcao,pi,nota_12,nota_10/11,curso_univ,curso_pais,vagas_curso,designacao,vagas_resultantes,tipo_de_universidade,universidade\n')
     keys = ['num_id','nome','nota','opcao','pi_candidatos','nota_12','nota_10/11','curso_univ','curso_pais','vagas_curso','designacao', 'vagas_resultantes','tipo_de_universidade','universidade']
-    for line in assigned_db:
+    for line in assigned_db:0
         for key in keys:
             if key == 'opcao':
                 if line[key]:
@@ -217,7 +217,7 @@ with open('colocados_db.csv','w', encoding='latin-1') as ft:
         ft.write('\n')
 
 with open('candidatos_db.csv','w',encoding='latin-1') as ft:
-    ft.write('num_id,nome,nota,opcao,pi,nota_12,nota_10/11,curso_univ,curso_pais,vagas_curso,designacao,\n')
+    ft.write('num_id,nome,nota,opcao,pi,nota_12,nota_10/11,curso_univ,curso_pais,vagas_curso,designacao,tipo_de_universidade,universidade\n')
     keys = ['num_id','nome','nota','opcao','pi_candidatos','nota_12','nota_10/11','curso_univ','curso_pais','vagas_curso','designacao','tipo_de_universidade','universidade']
     for line in candidates_db:
         for key in keys:

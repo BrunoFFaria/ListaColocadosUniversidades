@@ -19,6 +19,9 @@ def unique(seq):
     seen_add = seen.add
     return [x for x in seq if not (x in seen or seen_add(x))]
 
+ 
+#
+
 opennings_base_url  = 'https://www.dges.gov.pt/guias/indcurso.asp?letra='
 assigned_base_url   = 'https://www.dges.gov.pt/coloc/2020/col1listacol.asp'
 candidates_base_url = 'https://www.dges.gov.pt/coloc/2020/col1listaser.asp'
@@ -28,7 +31,7 @@ headers = {'User-agent'   : 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KH
            'Content-Type' : 'application/x-www-form-urlencoded',
            'Cookie'       : 'SimpleSAMLSessionID=9467c52bab71ab6db3d83757daa9f777; has_js=1; .ASPXANONYMOUS=4taggxuE0nJN-El5h14jJuT_tz8UO60Pcc2wZdltxB4df4eLsEV6qOWr9AOi6ZrNzA0uUZyo-j8CAOgNW-O0BZFB_7rw51k74j9iDwypi10FtcEvKB0JDv7MS3KBzq6K5Y_xUyOBg4gZtk0HIcEucQ2; ASP.NET_SessionId=ktfzzdtgmfjhqoigpe5byg3b; __utma=206808582.2091087817.1601224130.1601224130.1601224130.1; __utmc=206808582; __utmz=206808582.1601224130.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; ASPSESSIONIDAQTCTQRS=NHCHCKBAHJIPFNHCDNBBDJOO; ASPSESSIONIDCQSCTQTQ=BAGPBOBAHDPJHKKBLMDMCAJA; ASPSESSIONIDCQSDSTTR=AIPMDJBAJFBNKMDKOEIKNEDI; ASPSESSIONIDSCTAQSTS=DLNBFKAAFGDDBMAHIAIDFMNG; ASPSESSIONIDCSSARSTS=MGAOLNAAJLJPPNDOELGGCPNL; ASPSESSIONIDASRDSQRT=DDOICJBAMDGMPIJIMHOMNPCJ; ASPSESSIONIDCQQCSRTQ=IIICIJBAFFMKLCOAFHKPAHNM; ASPSESSIONIDCQTDRQSS=JBKCGCBAEKOLIDIIHDHHCDFO; ASPSESSIONIDASSCTQRT=LBMBKEBAODEOEEDPGEIPKKAK; ASPSESSIONIDAQSATRST=BADDKJAAGOMJOMLICJPEHKBD; ASPSESSIONIDASRASRSS=FDKHMDBAHHBDFFCDPIHCFOAJ; __utmb=206808582.12.10.1601224130'}
 
-http = urllib3.PoolManager()
+http = urllib3.PoolManager(maxsize=0)
 
 for letter in ascii_uppercase:
     
@@ -55,7 +58,7 @@ for letter in ascii_uppercase:
         
         # check if this course belongs to a politechnic university, if it is and is valid mark as so
         university_page = http.request('GET',                                  \
-                        url = base_page +  university_courses_url[id_],   \
+                        url = base_page + university_courses_url[id_],   \
                             headers = headers)
         
         university_page_root = etree.HTML( university_page.data ) 

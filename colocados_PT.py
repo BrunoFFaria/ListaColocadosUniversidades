@@ -8,6 +8,7 @@ Created on Sun Sep  8 08:48:21 2019
 import urllib3
 from string import ascii_uppercase
 from lxml import  etree
+import time
 
 assigned_db   = []
 candidates_db = []
@@ -18,14 +19,14 @@ def unique(seq):
     seen_add = seen.add
     return [x for x in seq if not (x in seen or seen_add(x))]
 
-opennings_base_url  = 'http://www.dges.gov.pt/guias/indcurso.asp?letra='
-assigned_base_url   = 'http://www.dges.gov.pt/coloc/2019/col1listacol.asp'
-candidates_base_url = 'http://www.dges.gov.pt/coloc/2019/col1listaser.asp'
-base_page           = 'http://www.dges.gov.pt/guias/'
+opennings_base_url  = 'https://www.dges.gov.pt/guias/indcurso.asp?letra='
+assigned_base_url   = 'https://www.dges.gov.pt/coloc/2020/col1listacol.asp'
+candidates_base_url = 'https://www.dges.gov.pt/coloc/2020/col1listaser.asp'
+base_page           = 'https://www.dges.gov.pt/guias/'
 
 headers = {'User-agent'   : 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.16 Safari/537.36',
            'Content-Type' : 'application/x-www-form-urlencoded',
-           'Cookie'       : 'ASPSESSIONIDASDCRASQ=AGNNIKBDGJGIJLKLCIKJHBMD; ASPSESSIONIDSAARDCRR=BMNNGIBDEHJPOEDAGPPGACBN; __utma=69316101.253696569.1505119588.1505119588.1505119711.2; __utmb=69316101.2.10.1505119711; __utmc=69316101; __utmz=69316101.1505119711.2.2.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not"%"20provided); ASPSESSIONIDCQCQDASQ=MNDPNLBDNAJFIKFKHFANMMEN; ASPSESSIONIDAQRDSATS=EEDGKMADEKMMCCDNEEGOBOAB; ASPSESSIONIDCCDBRBRS=EEJDIHBDPGJMLPOGOAOHMFHD'}
+           'Cookie'       : 'SimpleSAMLSessionID=9467c52bab71ab6db3d83757daa9f777; has_js=1; .ASPXANONYMOUS=4taggxuE0nJN-El5h14jJuT_tz8UO60Pcc2wZdltxB4df4eLsEV6qOWr9AOi6ZrNzA0uUZyo-j8CAOgNW-O0BZFB_7rw51k74j9iDwypi10FtcEvKB0JDv7MS3KBzq6K5Y_xUyOBg4gZtk0HIcEucQ2; ASP.NET_SessionId=ktfzzdtgmfjhqoigpe5byg3b; __utma=206808582.2091087817.1601224130.1601224130.1601224130.1; __utmc=206808582; __utmz=206808582.1601224130.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; ASPSESSIONIDAQTCTQRS=NHCHCKBAHJIPFNHCDNBBDJOO; ASPSESSIONIDCQSCTQTQ=BAGPBOBAHDPJHKKBLMDMCAJA; ASPSESSIONIDCQSDSTTR=AIPMDJBAJFBNKMDKOEIKNEDI; ASPSESSIONIDSCTAQSTS=DLNBFKAAFGDDBMAHIAIDFMNG; ASPSESSIONIDCSSARSTS=MGAOLNAAJLJPPNDOELGGCPNL; ASPSESSIONIDASRDSQRT=DDOICJBAMDGMPIJIMHOMNPCJ; ASPSESSIONIDCQQCSRTQ=IIICIJBAFFMKLCOAFHKPAHNM; ASPSESSIONIDCQTDRQSS=JBKCGCBAEKOLIDIIHDHHCDFO; ASPSESSIONIDASSCTQRT=LBMBKEBAODEOEEDPGEIPKKAK; ASPSESSIONIDAQSATRST=BADDKJAAGOMJOMLICJPEHKBD; ASPSESSIONIDASRASRSS=FDKHMDBAHHBDFFCDPIHCFOAJ; __utmb=206808582.12.10.1601224130'}
 
 http = urllib3.PoolManager()
 
@@ -49,9 +50,12 @@ for letter in ascii_uppercase:
         
         fields_data     = {'CodCurso':country_code ,'CodEstab':university_code}
         
+        # wait a little bit
+        time.sleep(0.3)
+        
         # check if this course belongs to a politechnic university, if it is and is valid mark as so
         university_page = http.request('GET',                                  \
-                        url = base_page + '/' + university_courses_url[id_],   \
+                        url = base_page +  university_courses_url[id_],   \
                             headers = headers)
         
         university_page_root = etree.HTML( university_page.data ) 
@@ -203,7 +207,7 @@ for letter in ascii_uppercase:
 with open('colocados_db.csv','w', encoding='latin-1') as ft:
     ft.write('num_id,nome,nota,opcao,pi,nota_12,nota_10/11,curso_univ,curso_pais,vagas_curso,designacao,vagas_resultantes,tipo_de_universidade,universidade\n')
     keys = ['num_id','nome','nota','opcao','pi_candidatos','nota_12','nota_10/11','curso_univ','curso_pais','vagas_curso','designacao', 'vagas_resultantes','tipo_de_universidade','universidade']
-    for line in assigned_db:0
+    for line in assigned_db:
         for key in keys:
             if key == 'opcao':
                 if line[key]:
